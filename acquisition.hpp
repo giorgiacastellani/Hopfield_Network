@@ -1,26 +1,35 @@
 #ifndef ACQUISITION_HPP
 #define ACQUISITION_HPP
 #include <SFML/Graphics.hpp>
-namespace Hopfield{
-
-
-class Acquisition // classe per passare da immagine a "architettura" e fissare il
-              // numero di neuroni
+#include <vector>
+namespace Hopfield {
+using Pattern = std::vector<int>;
+struct Sfml // struttura per contenere elementi sfml
 {
-  int height_;
+  sf::Image image_;
+  sf::Texture texture_;
+  sf::Sprite sprite_;
+};
+
+class Acquisition // classe per passare da immagine a "architettura" e fissare
+                  // il numero di neuroni
+{
+  int height_; // altezza finale desiderata del pattern
   int width_;
   int N_;
 
  public:
-  Acquisition(double height, double width)
+  Acquisition(int height, int width)
       : height_{height}
       , width_{width}
+      , N_{height * width}
   {}
 
   int getHeight() const;
   int getWidth() const;
   int getN() const;
+  sf::Image loadimmage(const std::string& filename);
 };
-}
+} // namespace Hopfield
 
 #endif
