@@ -7,6 +7,7 @@ using Pattern = std::vector<int>;
 struct Sfml // struttura per contenere elementi sfml
 {
   sf::Image image_;
+  sf::Color color_;
   sf::Texture texture_;
   sf::Sprite sprite_;
 };
@@ -28,7 +29,8 @@ class Acquisition // classe per passare da immagine a "architettura" e fissare
   int getHeight() const;
   int getWidth() const;
   int getN() const;
-  sf::Image loadimmage(const std::string& filename);
+  sf::Image loadimmage(const std::string& filename);// carica l'immagine
+
 };
 } // namespace Hopfield
 
