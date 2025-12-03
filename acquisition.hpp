@@ -1,6 +1,9 @@
 #ifndef ACQUISITION_HPP
 #define ACQUISITION_HPP
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <stdexcept> // Per std::runtime_error
+#include <string>
 #include <vector>
 namespace Hopfield {
 using Pattern = std::vector<int>;
@@ -29,8 +32,8 @@ class Acquisition // classe per passare da immagine a "architettura" e fissare
   int getHeight() const;
   int getWidth() const;
   int getN() const;
-  sf::Image loadimmage(const std::string& filename);// carica l'immagine
-
+  sf::Image loadimage(const std::string& filename); // carica l'immagine
+  sf::Image resize_interpolation(const sf::Image & original_image) const;
 };
 } // namespace Hopfield
 
