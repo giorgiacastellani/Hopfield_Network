@@ -18,9 +18,9 @@ struct Sfml // struttura per contenere elementi sfml
 class Acquisition // classe per passare da immagine a "architettura" e fissare
                   // il numero di neuroni
 {
-  int height_; // altezza finale desiderata del pattern
-  int width_;
-  int N_;
+  unsigned height_; // altezza finale desiderata del pattern
+  unsigned width_;
+  unsigned N_;
 
  public:
   Acquisition(int height, int width)
@@ -29,12 +29,15 @@ class Acquisition // classe per passare da immagine a "architettura" e fissare
       , N_{height * width}
   {}
 
-  int getHeight() const;
-  int getWidth() const;
-  int getN() const;
-  sf::Image loadimage(const std::string& filename); // carica l'immagine
-  sf::Image resize_interpolation(const sf::Image & original_image) const;
+  unsigned getHeight() const;
+  unsigned getWidth() const;
+  unsigned getN() const;
+
+  sf::Image resize_interpolation(const sf::Image& original_image) const;
 };
+
+sf::Image loadimage(const std::string& filename); // carica l'immagine
+
 } // namespace Hopfield
 
 #endif
