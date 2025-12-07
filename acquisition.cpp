@@ -33,11 +33,32 @@ Acquisition::resize_interpolation(const sf::Image& original_image) const
     return original_image;
   }
 
-  //in tutti gli altri casi, applichiamo il metodo di interpolazione bilineare
-  //a questo punto ci servono 4 pixel adiacenti a quello protagonista, per trovare questi 4 punti
-  //ci serviamo di un fattore di scala che stabiliamo arbitrariamente: i 4 pixel prossimi per una distanza di 0.5 (a sx,a dx, in alto, in basso
-  //se il nostro punto è l'origine immaginiamo una circ. di raggio 0.5 e che i 4 pixel su cui fondiamo il metodo siano corrispondenti agli angoli 0, pi/2, pi, 3/2pi e 2pi)
-  const float scale_x=static_cast
+  // in tutti gli altri casi, applichiamo il metodo di interpolazione bilineare
+  // calcoliamo gli "scale factor" sia per x che per y, dobbiamo poi effettuare
+  // interpolazione lineare su entrambe le variabili, gemini consiglia di usare
+  // un +o.5 scale factor per centrare il campionamento static cast per maggiore
+  // precisione
+  const float scale_x = static_cast<float>(original_width) / width_;
+  const float scale_y = static_cast<float>(original_height) / height_;
+
+  // doppio ciclo for
+  for (int x_new = 0; x_new < width_; x_new++) {
+    for (int y_new = 0; y_new < height_; y_new++) {
+      // per calcolare P(x_old,y_old)
+      const float x_old = (x_new + 0.5f) * scale_x - 0.5f;
+      const float y_old = (y_new + 0.5f) * scale_y - 0.5f;
+      // passiamo da float a int, avremmo potuto usare int x_i=float x_old;
+      const int x_i = static_cast<int>(x_old);
+      const int y_i = static_cast<int>(y_old);
+
+      // immaginiamo di lavorare su un quadrato di lato 1, Q11,Q12,Q21,Q22
+      // voglio definire le distanze tra coordinate coppia a coppia
+
+      // mi serve una funzione Sfml per prendere l'intensità di ciascun pixel
+
+      // infine applico la formula wikipedia, 3 volte, una per colore
+    }
+  }
 }
 
 sf::Image loadimage(const std::string& filename)
