@@ -53,9 +53,9 @@ Acquisition::resize_interpolation(const sf::Image& original_image) const
   const unsigned original_width  = original_image.getSize().x;
   const unsigned original_height = original_image.getSize().y;
 
-  Acquisition original_image(original_width, original_height); // necessario ?
+  //Acquisition original_image(original_width, original_height); // necessario ?
 
-  Acquisition resized_image(width_, height_);
+  //Acquisition resized_image(width_, height_);
 
   // caso limite: l'immagine fornita è già delle dimensioni desiderate
   if (original_width == width_ && original_height == height_) {
@@ -63,6 +63,7 @@ Acquisition::resize_interpolation(const sf::Image& original_image) const
   }
 
   // in tutti gli altri casi, applichiamo il metodo di interpolazione bilineare
+  //Calcola i fattori di scala, ovvero di quanto l'immagine originale è più grande di quella nuova
   const float scale_x = static_cast<float>(original_width) / width_;
   const float scale_y = static_cast<float>(original_height) / height_;
 
