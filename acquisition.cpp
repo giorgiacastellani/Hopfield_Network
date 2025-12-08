@@ -121,8 +121,8 @@ Acquisition::resize_interpolation(const sf::Image& original_image) const
 
       sf::Color P_interp(R_interp, G_interp, B_interp);
 
-      // confusione tra sfml image e acquisition
-      resized_image.setPixel(x_new, y_new, P_interp);
+      //confusione tra sfml e acquisition
+      sf::Image resized_image.setPixel(x_new, y_new, P_interp);
     }
   }
   return resized_image;
