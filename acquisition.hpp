@@ -1,13 +1,15 @@
 #ifndef ACQUISITION_HPP
 #define ACQUISITION_HPP
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <algorithm>
+#include <cmath>
 #include <cstdint> // Necessario per std::uint8_t
 #include <iostream>
-#include <stdexcept> // Per std::runtime_error
+#include <stdexcept>
 #include <string>
 #include <vector>
 namespace Hopfield {
-// using Pattern = std::vector<int>;
 
 struct Sfml // struttura per contenere elementi sfml
 {
@@ -22,15 +24,12 @@ struct MappedPixel
   unsigned x_;
   unsigned y_;
 
-  // gemini: "std::uint8_t è il tipo standard per i canali colore (0-255)"
-  // unsigned int con 8 bit di dimensione, il range è 256
   std::uint8_t R_;
   std::uint8_t G_;
   std::uint8_t B_;
 
-  // costruttore
-  MappedPixel(int x, int y, std::uint8_t red, std::uint8_t blue,
-              std::uint8_t green)
+  MappedPixel(int x, int y, std::uint8_t red, std::uint8_t green,
+              std::uint8_t blue)
       : x_{x}
       , y_{y}
       , R_{red}
@@ -38,45 +37,47 @@ struct MappedPixel
       , B_{blue}
   {}
 
-  // getter
   unsigned get_x() const {};
   unsigned get_y() const {};
 
-  // Ritorna l'intensità del canale Rosso (Red)
   std::uint8_t get_R() const {};
 
-  // Ritorna l'intensità del canale Verde (Green)
   std::uint8_t get_G() const {};
 
-  // Ritorna l'intensità del canale Blu (Blue)
   std::uint8_t get_B() const {};
 
-  //setter
   void setPixel(sf::Image& inputImage);
 };
 
 class Acquisition // classe per passare da immagine a "architettura" e fissare
-                  // il numero di neuroni
+                  // il numero di neuroni...si appoggia totalmente a SFML, ma
+                  // includendo image_ tra le var private manteniamo la libertà
+                  // di agire separatamente tra corpo del codice e oggetti di
+                  // supporto
 {
-  unsigned height_; // altezza finale desiderata del pattern
+  unsigned height_;
   unsigned width_;
-  unsigned N_;
+  sf::Image image_;
 
  public:
   Acquisition(int height, int width)
       : height_{height}
-      , width_{width}
-      , N_{height * width}
-  {}
+      , width_{width} // image_ viene creata con il default constructor
+
+  {
+    image_.create(width_, height_, sf::Color::Black);
+  }
 
   unsigned getHeight() const;
   unsigned getWidth() const;
-  unsigned getN() const;
 
-  sf::Image resize_interpolation(const sf::Image& original_image) const;
+  void setPixel(unsigned x, unsigned y, const sf::Color& color);
+  void resize_interpolation(
+      const sf::Image&
+          original_image); // non creiamo un nuovo oggetto ma modifichiamo lo stato dell'originale
 };
 
-sf::Image loadimage(const std::string& filename); // carica l'immagine
+sf::Image loadimage(const std::string& filename); 
 
 } // namespace Hopfield
 

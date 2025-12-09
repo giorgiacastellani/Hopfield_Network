@@ -1,5 +1,4 @@
 #include "acquisition.hpp"
-#include <cmath> //forse non dovrebbe stare qui??
 
 namespace Hopfield {
 // definizioni dei getter/setter della struct MappedPixel
@@ -29,7 +28,7 @@ void MappedPixel::setPixel(sf::Image& inputImage)
   inputImage.setPixel(x_, y_, color_to_set);
 }
 
-// definizioni dei getter/metodi della classe Acquisition
+// definizioni dei getter/setter/metodi della classe Acquisition
 unsigned Acquisition::getHeight() const
 {
   return height_;
@@ -38,32 +37,30 @@ unsigned Acquisition::getWidth() const
 {
   return width_;
 }
-unsigned Acquisition::getN() const
+void Acquisition::setPixel(unsigned x, unsigned y, const sf::Color& color)
 {
-  return width_ * height_;
-}
+  if (x >= width_ || y >= height_) {
+    return;
+  }
+  image_.setPixel(x, y, color);
+};
 
-sf::Image
-Acquisition::resize_interpolation(const sf::Image& original_image) const
+void Acquisition::resize_interpolation(const sf::Image& original_image)
 {
-  // otteniamo le dimensioni dell'immagine sottoposta a ridimensionamento
-  // il metodo getSize() di sfml resistuisce un vettore v2(vx,vy) per cui
-  // vx=larghezza e vy=altezza
-
-  const unsigned original_width  = original_image.getSize().x;
+   const unsigned original_width  = original_image.getSize().x;
   const unsigned original_height = original_image.getSize().y;
 
-  //Acquisition original_image(original_width, original_height); // necessario ?
-
-  //Acquisition resized_image(width_, height_);
+  image_.create(width_, height_, sf::Color::Black);
 
   // caso limite: l'immagine fornita è già delle dimensioni desiderate
   if (original_width == width_ && original_height == height_) {
-    return original_image;
+    image_ = original_image;
+    return;
   }
 
   // in tutti gli altri casi, applichiamo il metodo di interpolazione bilineare
-  //Calcola i fattori di scala, ovvero di quanto l'immagine originale è più grande di quella nuova
+  // Calcola i fattori di scala, ovvero di quanto l'immagine originale è più
+  // grande di quella nuova
   const float scale_x = static_cast<float>(original_width) / width_;
   const float scale_y = static_cast<float>(original_height) / height_;
 
@@ -74,7 +71,6 @@ Acquisition::resize_interpolation(const sf::Image& original_image) const
       const double x_src = x_new * scale_x;
       const double y_src = y_new * scale_y;
       // mi servono pixel interi
-      //  Alternativa a floor per valori positivi
       const unsigned x1 = static_cast<unsigned>(x_src);
       const unsigned y1 = static_cast<unsigned>(y_src);
       // a partire da quello "in basso a sx" trovo gli altri 3 pixel
@@ -101,32 +97,32 @@ Acquisition::resize_interpolation(const sf::Image& original_image) const
 
       // interpolazione bilineare svolta per ciascun canale di colore RGB
       // funzione lambda per eseguire l'interpolazione per un singolo canale
-      auto interpolate_channel = [&](std::uint8_t c11, std::uint8_t c21,
-                                     std::uint8_t c12,
-                                     std::uint8_t c22) -> std::uint8_t {
+      auto interpolate_channel = [&](std::uint8_t C11, std::uint8_t C21,
+                                     std::uint8_t C12,
+                                     std::uint8_t C22) -> std::uint8_t {
         // Interpolazione lineare su X (ai livelli y1 e y2)
-        const double c_x1 = c11 * (1.0 - dx) + c21 * dx;
-        const double c_x2 = c12 * (1.0 - dx) + c22 * dx;
+        const double C_x1 = C11 * (1.0 - dx) + C21 * dx;
+        const double C_x2 = C12 * (1.0 - dx) + C22 * dx;
 
         // Interpolazione lineare su Y (tra c_x1 e c_x2)
-        const double c_final = c_x1 * (1.0 - dy) + c_x2 * dy;
+        const double C_final = C_x1 * (1.0 - dy) + C_x2 * dy;
 
         // Arrotonda e limita il valore nell'intervallo [0, 255]
         return static_cast<std::uint8_t>(
-            std::clamp(std::round(c_final), 0.0, 255.0));
+            std::clamp(std::round(C_final), 0.0, 255.0));
       };
 
       std::uint8_t R_interp = interpolate_channel(C11.r, C21.r, C12.r, C22.r);
       std::uint8_t G_interp = interpolate_channel(C11.g, C21.g, C12.g, C22.g);
       std::uint8_t B_interp = interpolate_channel(C11.b, C21.b, C12.b, C22.b);
 
-      sf::Color P_interp(R_interp, G_interp, B_interp);
+      /*sf::Color P_interp(R_interp, G_interp, B_interp);
 
-      //confusione tra sfml e acquisition
-      sf::Image resized_image.setPixel(x_new, y_new, P_interp);
+      resized_image.setPixel(x_new, y_new, P_interp); */
+      MappedPixel P_interp_mapped(x_new, y_new, R_interp, G_interp, B_interp);
+      P_interp_mapped.setPixel(image_);
     }
   }
-  return resized_image;
 }
 
 // definizioni delle funzioni libere
@@ -134,7 +130,6 @@ sf::Image loadimage(const std::string& filename)
 {
   sf::Image image;
 
-  // ciclo che serve per caricare le immagini, filename funziona da path
   if (!image.loadFromFile(filename)) {
     throw std::runtime_error("The image could not be loaded correctly");
   }
