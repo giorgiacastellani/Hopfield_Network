@@ -1,17 +1,19 @@
 #ifndef ACQUISITION_HPP
 #define ACQUISITION_HPP
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Color.hpp>
-#include <algorithm>
-#include <cmath>
-#include <cstdint> // Necessario per std::uint8_t
-#include <iostream>
-#include <stdexcept>
+// #  include <algorithm>
+// #  include <cmath>
+// #  include <cstdint> // Necessario per std::uint8_t
+// #  include <iostream>
+// #  include <stdexcept>
+// #  include <string>
+#include <filesystem>
 #include <string>
 #include <vector>
-namespace Hopfield {
 
-struct Sfml // struttura per contenere elementi sfml
+namespace Hopfield {
+/*
+Struct Sfml // struttura per contenere elementi sfml
 {
   sf::Image image_;
   sf::Color color_;
@@ -74,10 +76,61 @@ class Acquisition // classe per passare da immagine a "architettura" e fissare
   void setPixel(unsigned x, unsigned y, const sf::Color& color);
   void resize_interpolation(
       const sf::Image&
-          original_image); // non creiamo un nuovo oggetto ma modifichiamo lo stato dell'originale
+          original_image); // non creiamo un nuovo oggetto ma modifichiamo lo
+stato dell'originale
 };
 
-sf::Image loadimage(const std::string& filename); 
+sf::Image loadimage(const std::string& filename);
+*/
+class HopfieldPattern
+{
+ private:
+  unsigned int width_{0}; // capisci che cosa cambia con inizializzazione
+  unsigned int height_{0};
+  std::vector<int> data_;
+
+ public:
+  HopfieldPattern()
+  {} // utile o meno? costruttore default
+  HopfieldPattern(unsigned int width, unsigned int height)
+      : width_(width)
+      , height_(height)
+      , data_(width * height, -1)
+  {}
+  // -- METODI DELLA CLASSE --
+  HopfieldPattern interpolate(const sf::Image& originalImage,
+                              unsigned int targetHeight,
+                              unsigned int targetWidth) const;
+
+  void binarize(const sf::Image& image, float threshold = 127.0f);
+
+  bool saveToFile(const std::filesystem::path& filepath) const;
+
+  // -- GETTER E UTILI --
+  unsigned int getWidth() const
+  {
+    return width_;
+  }
+  unsigned int getHeight() const
+  {
+    return height_;
+  }
+  std::size_t getSize() const
+  {
+    return data_.size();
+  }
+  // Accesso in sola lettura
+  int operator[](std::size_t index) const
+  {
+    return data_[index];
+  }
+
+  // Accesso in scrittura
+  int& operator[](std::size_t index)
+  {
+    return data_[index];
+  }
+};
 
 } // namespace Hopfield
 

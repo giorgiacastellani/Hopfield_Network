@@ -1,7 +1,7 @@
 #include "acquisition.hpp"
 
 namespace Hopfield {
-// definizioni dei getter/setter della struct MappedPixel
+/*
 unsigned MappedPixel::get_x() const
 {
   return x_;
@@ -116,10 +116,9 @@ void Acquisition::resize_interpolation(const sf::Image& original_image)
       std::uint8_t G_interp = interpolate_channel(C11.g, C21.g, C12.g, C22.g);
       std::uint8_t B_interp = interpolate_channel(C11.b, C21.b, C12.b, C22.b);
 
-      /*sf::Color P_interp(R_interp, G_interp, B_interp);
-
-      resized_image.setPixel(x_new, y_new, P_interp); */
-      MappedPixel P_interp_mapped(x_new, y_new, R_interp, G_interp, B_interp);
+      //sf::Color P_interp(R_interp, G_interp, B_interp);
+resized_image.setPixel(x_new, y_new, P_interp); MappedPixel
+P_interp_mapped(x_new, y_new, R_interp, G_interp, B_interp);
       P_interp_mapped.setPixel(image_);
     }
   }
@@ -135,5 +134,17 @@ sf::Image loadimage(const std::string& filename)
   }
   return image;
 }
+*/
+
+HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
+                                             unsigned int targetWidth,
+                                             unsigned int targetHeight) const
+{}
+
+void HopfieldPattern::binarize(const sf::Image& image, float threshold)
+{}
+
+bool HopfieldPattern::saveToFile(const std::filesystem::path& filepath) const
+{}
 
 } // namespace Hopfield
