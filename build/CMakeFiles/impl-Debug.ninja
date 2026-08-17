@@ -274,9 +274,10 @@ build CMakeFiles/progetto.t.dir/Debug/test.cpp.o: CXX_COMPILER__progetto.2et_uns
 #############################################
 # Link the executable Debug/progetto.t
 
-build Debug/progetto.t: CXX_EXECUTABLE_LINKER__progetto.2et_Debug CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o CMakeFiles/progetto.t.dir/Debug/test.cpp.o
+build Debug/progetto.t: CXX_EXECUTABLE_LINKER__progetto.2et_Debug CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o CMakeFiles/progetto.t.dir/Debug/test.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined
   LINK_FLAGS = -fsanitize=address,undefined
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/progetto.t.dir/Debug
   POST_BUILD = :
   PRE_LINK = :

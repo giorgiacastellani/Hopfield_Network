@@ -139,12 +139,80 @@ sf::Image loadimage(const std::string& filename)
 HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
                                              unsigned int targetWidth,
                                              unsigned int targetHeight) const
-{}
+{                      // Implementazione temporanea/stub
+  (void)originalImage; // Silenzia il warning di parametro non usato
+  return HopfieldPattern(targetWidth, targetHeight);
+}
 
 void HopfieldPattern::binarize(const sf::Image& image, float threshold)
-{}
+{
+  width_  = image.getSize().x; // https://cppreference.com/cpp/types/size_t
+  height_ = image.getSize().y;
 
+  data_.resize(static_cast<std::size_t>(width_) * height_);
+
+  // ciclo che "ricopre" tutti i pixel, occupandosene riga per riga
+  for (unsigned int y = 0; y < height_; ++y) {
+    for (unsigned int x = 0; x < width_; ++x) {
+      // estrazione del colore del pixel
+      sf::Color color = image.getPixel(
+          x,
+          y); // https://www.sfml-dev.org/documentation/3.1.0/classsf_1_1Image.html#a166e09f1c57c5d186c77682ae898f852
+
+      // calcolo del parametro g
+      float g = (static_cast<float>(color.r) + static_cast<float>(color.g)
+                 + static_cast<float>(color.b))
+              / 3.0f;
+      // calcolo dell'indice uno-dimensionale per scorrere data_
+      std::size_t index = static_cast<std::size_t>(y) * width_ + x;
+
+      // ciclo
+      if (g >= threshold) {
+        data_[index] = 1; // Pixel chiaro o sopra la soglia
+      } else {
+        data_[index] = -1; // Pixel scuro o sotto la soglia
+      }
+    }
+  }
+}
+
+// gemini: "Per salvare il pattern binarizzato su file occorre eseguire il
+// processo inverso rispetto a binarize: si convertono i valori binari (+1 e
+// -1) presenti in data_ nei colori corrispondenti di un'immagine sf::Image,
+// per poi delegare il salvataggio su disco a SFML."
 bool HopfieldPattern::saveToFile(const std::filesystem::path& filepath) const
-{}
+{
+  // controllo di validità del pattern...per il metodo empty
+  // https://en.cppreference.com/cpp/container/vector/empty
+  if (width_ == 0 || height_ == 0 || data_.empty()) {
+    return false;
+  }
+  // creazione dell'immagine SFML con le dimensioni del pattern
+  sf::Image image;
+  image.create(
+      width_,
+      height_); // sulla documentazione corrente non si trova
+                // create...versione datata di SFML
+                // https://www.sfml-dev.org/documentation/3.1.0/classsf_1_1Image.html
 
+  // mappatura dei valori binari (+/-1) sui pixel dell'immagine
+  for (unsigned int y = 0; y < height_; ++y) {
+    for (unsigned int x = 0; x < width_; ++x) {
+      std::size_t index = static_cast<std::size_t>(y) * width_ + x;
+
+      sf::Color color;
+
+      if (data_[index] == 1) {
+        color = sf::Color::White;
+      } else {
+        color = sf::Color::Black;
+      }
+
+      image.setPixel(x, y, color);
+    }
+  }
+
+  // salvataggio dell'immagine su percorso specifico
+  return image.saveToFile(filepath.string());
+}
 } // namespace Hopfield

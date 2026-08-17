@@ -11,8 +11,8 @@ int main()
   }
   // 2. Ridimensionamento e binarizzazione dell'immagine
 
-  unsigned int targetWidth;
-  unsigned int targetHeight;
+  unsigned int targetWidth=20;
+  unsigned int targetHeight=20;
 
   Hopfield::HopfieldPattern pattern;
   Hopfield::HopfieldPattern ready_pattern =

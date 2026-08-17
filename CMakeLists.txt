@@ -49,6 +49,10 @@ if (BUILD_TESTING)
 
   # aggiungi l'eseguibile progetto.t
   add_executable(progetto.t acquisition.cpp test.cpp)
+
+# MODIFICA!!!!!!!!!
+  target_link_libraries(progetto.t PRIVATE sfml-graphics)
+
   # aggiungi l'eseguibile progetto.t alla lista dei test
   add_test(NAME progetto.t COMMAND progetto.t)
 

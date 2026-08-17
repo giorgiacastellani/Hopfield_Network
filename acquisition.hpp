@@ -98,10 +98,14 @@ class HopfieldPattern
       , data_(width * height, -1)
   {}
   // -- METODI DELLA CLASSE --
+  
   HopfieldPattern interpolate(const sf::Image& originalImage,
                               unsigned int targetHeight,
                               unsigned int targetWidth) const;
 
+  // per ciascun pixel - corrispondente a una componente di data_ - vogliamo
+  // estrarre R G B e calcolare g in maniera da confrontarlo con il valore
+  // soglia ... serve costruire un ciclo
   void binarize(const sf::Image& image, float threshold = 127.0f);
 
   bool saveToFile(const std::filesystem::path& filepath) const;

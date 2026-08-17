@@ -1,0 +1,20 @@
+# ninja log v5
+2405	2645	1786977329340731964	Debug/progetto	b9620085bdc60ca0
+4	2605	1786977255660322871	CMakeFiles/progetto.dir/Debug/main.cpp.o	9f6f30a185cbe66c
+31	11374	1786977004972649947	CMakeFiles/progetto.t.dir/Debug/test.cpp.o	81ded91678b6576c
+5	2405	1786977329102669274	CMakeFiles/progetto.dir/Debug/acquisition.cpp.o	5fff4cbae5dfec92
+6	2424	1786977329122844738	CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o	f12f70fccb4ef1c3
+5	392	1786977749692429506	Debug/progetto.t	8216e83c932902df
+2	166	0	CMakeFiles/Debug/test.util	4bdb43b293aeb6a0
+7	401	0	CMakeFiles/Debug/test.util	4bdb43b293aeb6a0
+13	2327	1786991028301184136	CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o	f12f70fccb4ef1c3
+13	2329	1786991028302786838	CMakeFiles/progetto.dir/Debug/acquisition.cpp.o	5fff4cbae5dfec92
+2329	2611	1786991028584013150	Debug/progetto	b9620085bdc60ca0
+14	7837	1786991033796896569	CMakeFiles/progetto.t.dir/Debug/test.cpp.o	81ded91678b6576c
+7837	8027	1786991033998180773	Debug/progetto.t	8216e83c932902df
+6	9502	1786993005485520820	CMakeFiles/progetto.t.dir/Debug/test.cpp.o	81ded91678b6576c
+9502	9834	1786993005830015568	Debug/progetto.t	8216e83c932902df
+1	173	0	CMakeFiles/Debug/test.util	4bdb43b293aeb6a0
+6	6526	1786995285116567772	CMakeFiles/progetto.t.dir/Debug/test.cpp.o	81ded91678b6576c
+6526	6823	1786995285419661792	Debug/progetto.t	8216e83c932902df
+1	166	0	CMakeFiles/Debug/test.util	4bdb43b293aeb6a0

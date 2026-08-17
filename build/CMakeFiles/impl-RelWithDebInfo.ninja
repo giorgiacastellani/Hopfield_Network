@@ -273,8 +273,9 @@ build CMakeFiles/progetto.t.dir/RelWithDebInfo/test.cpp.o: CXX_COMPILER__progett
 #############################################
 # Link the executable RelWithDebInfo/progetto.t
 
-build RelWithDebInfo/progetto.t: CXX_EXECUTABLE_LINKER__progetto.2et_RelWithDebInfo CMakeFiles/progetto.t.dir/RelWithDebInfo/acquisition.cpp.o CMakeFiles/progetto.t.dir/RelWithDebInfo/test.cpp.o
+build RelWithDebInfo/progetto.t: CXX_EXECUTABLE_LINKER__progetto.2et_RelWithDebInfo CMakeFiles/progetto.t.dir/RelWithDebInfo/acquisition.cpp.o CMakeFiles/progetto.t.dir/RelWithDebInfo/test.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/progetto.t.dir/RelWithDebInfo
   POST_BUILD = :
   PRE_LINK = :
