@@ -100,8 +100,8 @@ class HopfieldPattern
   // -- METODI DELLA CLASSE --
   
   HopfieldPattern interpolate(const sf::Image& originalImage,
-                              unsigned int targetHeight,
-                              unsigned int targetWidth) const;
+                              unsigned int targetWidth,
+                              unsigned int targetHeight) const;
 
   // per ciascun pixel - corrispondente a una componente di data_ - vogliamo
   // estrarre R G B e calcolare g in maniera da confrontarlo con il valore

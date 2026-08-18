@@ -1,2 +1,2 @@
-progetto.t 4 0.0262757
+progetto.t 6 0.0140648
 ---
