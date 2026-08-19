@@ -98,7 +98,7 @@ class HopfieldPattern
       , data_(width * height, -1)
   {}
   // -- METODI DELLA CLASSE --
-  
+
   HopfieldPattern interpolate(const sf::Image& originalImage,
                               unsigned int targetWidth,
                               unsigned int targetHeight) const;
@@ -134,7 +134,10 @@ class HopfieldPattern
   {
     return data_[index];
   }
-};
+  std::size_t size() const
+  {
+    return data_.size();
+  };
 
 } // namespace Hopfield
 
