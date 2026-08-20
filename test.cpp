@@ -2,6 +2,8 @@
 #include "acquisition.hpp"
 #include "doctest.h"
 
+// https://github.com/doctest/doctest
+
 using namespace Hopfield; // a giacomini va bene??
 
 // -------------------------------------------------------------
@@ -233,73 +235,85 @@ TEST_CASE("HopfieldPattern - Bilinear Interpolation")
     }
   }
   SUBCASE("Non-Square Resizing and Dimension Getters")
-{
-  // 1. Immagine rettangolare sorgente (200x100 pixel)
-  sf::Image srcImage;
-  srcImage.create(200, 100, sf::Color::White);
+  {
+    // 1. Immagine rettangolare sorgente (200x100 pixel)
+    sf::Image srcImage;
+    srcImage.create(200, 100, sf::Color::White);
 
-  HopfieldPattern pattern;
-  // Ridimensioniamo a una griglia rettangolare di 20x5 neuroni
-  HopfieldPattern resized = pattern.interpolate(srcImage, 20, 5);
+    HopfieldPattern pattern;
+    // Ridimensioniamo a una griglia rettangolare di 20x5 neuroni
+    HopfieldPattern resized = pattern.interpolate(srcImage, 20, 5);
 
-  // 2. Verifica dei getter delle dimensioni
-  CHECK(resized.getWidth() == 20);
-  CHECK(resized.getHeight() == 5);
-  CHECK(resized.getSize() == 100); // 20 * 5 = 100 neuroni totali
+    // 2. Verifica dei getter delle dimensioni
+    CHECK(resized.getWidth() == 20);
+    CHECK(resized.getHeight() == 5);
+    CHECK(resized.getSize() == 100); // 20 * 5 = 100 neuroni totali
 
-  // 3. Verifica che il valore dei neuroni sia coerente (+1)
-  for (std::size_t i = 0; i < resized.getSize(); ++i) {
-    CHECK(resized[i] == 1);
+    // 3. Verifica che il valore dei neuroni sia coerente (+1)
+    for (std::size_t i = 0; i < resized.getSize(); ++i) {
+      CHECK(resized[i] == 1);
+    }
   }
-}
 }
 
 // -------------------------------------------------------------
 // 4. TEST METODO SAVETOFILE
 // -------------------------------------------------------------
-TEST_CASE("Hopfieldpattern - Salvataggio immagini")
-{
-  SUBCASE("Test Immagine Vuota")
-  {
-    HopfieldPattern pattern;
+TEST_CASE("Hopfieldpattern - Salvataggio immagini"){
 
-    CHECK(pattern.saveToFile("out.png") == false);
-  }
+SUBCASE("Test Immagine Vuota"){
+HopfieldPattern pattern1(0, 5, {}); // data_ è vuoto
+HopfieldPattern pattern2(5, 0, {}); // data_ è vuoto
+HopfieldPattern pattern3; // width_ = 0, height_ = 0, data_ è vuoto (default)
 
-  SUBCASE("Test Solo Bianco e Nero") // necessità? testa il percorso inverso a
-                                     // quello di binarize...non si riduce alla
-                                     // verifica che il pattern sia realmente
-                                     // binarizzato...è troppo complicato come
-                                     // test? rivedi
-  {
-    sf::Image img;
-    img.create(2, 2);
-    img.setPixel(0, 0, sf::Color::White);
-    img.setPixel(1, 0, sf::Color(100, 100, 100));
-    img.setPixel(0, 1, sf::Color::Black);
-    img.setPixel(1, 1, sf::Color(200, 200, 200));
-
-    HopfieldPattern pattern;
-    pattern.binarize(img, 127.0f);
-
-    std::filesystem::path testPath = "test_colors.png";
-
-    CHECK(pattern.saveToFile(testPath) == true);
-
-    sf::Image reloaded;
-    CHECK(reloaded.loadFromFile(testPath.string()) == true);
-
-    for (unsigned int y = 0; y < reloaded.getSize().y; ++y) {
-      for (unsigned int x = 0; x < reloaded.getSize().x; ++x) {
-        sf::Color c = reloaded.getPixel(x, y);
-        CHECK((c == sf::Color::White || c == sf::Color::Black));
-      }
-    }
-
-    std::filesystem::remove(testPath); // Pulizia file temporaneo
-  }
+CHECK(pattern1.saveToFile("out1.png") == false);
+CHECK(pattern2.saveToFile("out2.png") == false);
+CHECK(pattern3.saveToFile("out3.png") == false);
 }
 
-// completa/rivedi i test su saveToFile
-// capisci come gestire (o non gestire - come ora) il quarto parametro di
-// opacità
+SUBCASE("Test Dimensioni Immagine Salvata")
+{
+  // creo un oggetto HopfieldPattern con i parametri che voglio io;
+  HopfieldPattern pattern(2, 1, {1, 1});
+
+  // salvo l'oggetto su un percorso e controllo che il salvataggio sia
+  // avvenuto correttamente, non dovrebbe essere fermato da nessuno dei 3
+  // check
+  CHECK(pattern.saveToFile("out.png") == true);
+
+  // credo un oggetto immagine e usando il metodo SFML lo carico
+  sf::Image savedImage;
+  REQUIRE(savedImage.loadFromFile("out.png"));
+  // check vero e proprio: l'oggetto salvato è stato salvato con le stesse
+  // dimensioni di pattern?
+  CHECK(savedImage.getSize().x == 2);
+  CHECK(savedImage.getSize().y == 1);
+
+  std::filesystem::remove("out.png");
+}
+
+SUBCASE("Gestione di data_ con un elemento diverso da +1 e -1")
+{
+  HopfieldPattern pattern(2, 2, {1, 1, -1, 3});
+
+  CHECK(pattern.saveToFile("out.png") == false); // per via della presenza di
+                                                 // 3
+}
+
+SUBCASE("Test Correttezza Mappatura Colori Pixel")
+{
+  // Pattern 2x1: primo valore 1 (Bianco), secondo valore -1 (Nero)
+  HopfieldPattern pattern(2, 1, {1, -1});
+
+  REQUIRE(pattern.saveToFile("test_colors.png"));
+
+  sf::Image savedImage;
+  REQUIRE(savedImage.loadFromFile("test_colors.png"));
+
+  // Verifica la corrispondenza dei colori sui singoli pixel
+  CHECK(savedImage.getPixel(0, 0) == sf::Color::White);
+  CHECK(savedImage.getPixel(1, 0) == sf::Color::Black);
+
+  std::filesystem::remove("test_colors.png");
+}
+}

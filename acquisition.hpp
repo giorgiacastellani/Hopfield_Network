@@ -92,13 +92,12 @@ class HopfieldPattern
  public:
   HopfieldPattern()
   {} // utile o meno? costruttore default
-  HopfieldPattern(unsigned int width, unsigned int height)
+  HopfieldPattern(unsigned int width, unsigned int height, const std::vector<int>& data)
       : width_(width)
       , height_(height)
       , data_(width * height, -1)
   {}
   // -- METODI DELLA CLASSE --
-
   HopfieldPattern interpolate(const sf::Image& originalImage,
                               unsigned int targetWidth,
                               unsigned int targetHeight) const;
@@ -138,7 +137,7 @@ class HopfieldPattern
   {
     return data_.size();
   };
-
+};
 } // namespace Hopfield
 
 #endif

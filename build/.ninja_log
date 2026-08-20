@@ -13,3 +13,9 @@
 2776	8010	1787075773611922880	Debug/progetto	b9620085bdc60ca0
 45	14972	1787075780536958075	CMakeFiles/progetto.t.dir/Debug/test.cpp.o	81ded91678b6576c
 14972	15435	1787075781030227137	Debug/progetto.t	8216e83c932902df
+2	410	0	CMakeFiles/Debug/test.util	4bdb43b293aeb6a0
+10	226	0	CMakeFiles/Debug/test.util	4bdb43b293aeb6a0
+21	1925	1787260224605741489	CMakeFiles/progetto.dir/Debug/main.cpp.o	9f6f30a185cbe66c
+21	2054	1787260224733761312	CMakeFiles/progetto.dir/Debug/acquisition.cpp.o	5fff4cbae5dfec92
+21	2144	1787260224823938304	CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o	f12f70fccb4ef1c3
+2054	2361	1787260225041086289	Debug/progetto	b9620085bdc60ca0

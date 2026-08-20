@@ -1,63 +1,6 @@
 #include "acquisition.hpp"
 
 namespace Hopfield {
-/*
-unsigned MappedPixel::get_x() const
-{
-  return x_;
-}
-unsigned MappedPixel::get_y() const
-{
-  return y_;
-}
-std::uint8_t MappedPixel::get_R() const
-{
-  return R_;
-}
-std::uint8_t MappedPixel::get_G() const
-{
-  return G_;
-}
-std::uint8_t MappedPixel::get_B() const
-{
-  return B_;
-}
-void MappedPixel::setPixel(sf::Image& inputImage)
-{
-  sf::Color color_to_set(R_, G_, B_);
-  inputImage.setPixel(x_, y_, color_to_set);
-}
-
-// definizioni dei getter/setter/metodi della classe Acquisition
-unsigned Acquisition::getHeight() const
-{
-  return height_;
-}
-unsigned Acquisition::getWidth() const
-{
-  return width_;
-}
-void Acquisition::setPixel(unsigned x, unsigned y, const sf::Color& color)
-{
-  if (x >= width_ || y >= height_) {
-    return;
-  }
-  image_.setPixel(x, y, color);
-};
-
-
-
-// definizioni delle funzioni libere
-sf::Image loadimage(const std::string& filename)
-{
-  sf::Image image;
-
-  if (!image.loadFromFile(filename)) {
-    throw std::runtime_error("The image could not be loaded correctly");
-  }
-  return image;
-}
-*/
 
 void HopfieldPattern::binarize(const sf::Image& image, float threshold)
 {
@@ -102,18 +45,18 @@ HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
 
   if (originalImage.getSize().x == 0 || originalImage.getSize().y == 0
       || targetWidth == 0 || targetHeight == 0) {
-    return HopfieldPattern(0, 0);
+    return HopfieldPattern(0, 0, {});
   }
 
-  // Memorizza la larghezza e l'altezza dell'immagine originale SFML
-  unsigned int orig_width  = originalImage.getSize().x;
-  unsigned int orig_height = originalImage.getSize().y;
+  // Memorizza la larghezza e l'altezza dell'immagine originale SFML tipo
+  // unsigned int
+  unsigned int og_width  = originalImage.getSize().x;
+  unsigned int og_height = originalImage.getSize().y;
 
-  // Fattori di scala (rapporto tra dimensioni vecchie e nuove)
-  float scale_x =
-      static_cast<float>(orig_width) / static_cast<float>(targetWidth);
-  float scale_y =
-      static_cast<float>(orig_height) / static_cast<float>(targetHeight);
+  // Fattori di scala (rapporto tra dimensioni vecchie e nuove) tipo float per
+  // avere maggiore precisione
+  float scale_x = static_cast<float>((og_width) / (targetWidth));
+  float scale_y = static_cast<float>((og_height) / (targetHeight));
 
   // Crea una tela grafica temporanea SFML ridimensionata
   sf::Image resized_image;
@@ -125,21 +68,35 @@ HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
     for (unsigned int x = 0; x < targetWidth; ++x) {
       // MAPPA LA COORDINATA: calcola dove cade il pixel (x, y) nell'immagine
       // originale
-      float src_x = x * scale_x;
-      float src_y = y * scale_y;
+      float og_x = x * scale_x;
+      float og_y = y * scale_y;
 
-      // Trova le coordinate intere dei pixel vicini nell'immagine originale
-      unsigned int x1 = static_cast<unsigned int>(src_x);
-      unsigned int y1 = static_cast<unsigned int>(src_y);
+      // Trova le coordinate intere dei pixel vicini nell'immagine originale.
+      unsigned int x1 = static_cast<unsigned int>(og_x);
+      unsigned int y1 = static_cast<unsigned int>(og_y);
 
-      // Calcola il pixel adiacente (evitando di uscire dai bordi dell'immagine)
-      unsigned int x2 =
-          (x1 + 1 < orig_width) ? x1 + 1 : x1; // utilizzo operatore ternario
-      unsigned int y2 = (y1 + 1 < orig_height) ? y1 + 1 : y1;
+      // Calcola la coordinata adiacente (evitando di uscire dai bordi
+      // dell'immagine).Per l'interpolazione bilineare mi servono (x1,y1)
+      // (x2,y1) (x1,y2) (x2,y2) attorno al generico pixel (x,y)
+      unsigned int x2;
+      if (x1 + 1 < og_width) {
+        x2 = x1 + 1;
+      } else {
+        x2 = x1;
+      }
 
-      // Distanze frazionarie (la parte decimale delle coordinate)
-      float dx = src_x - x1;
-      float dy = src_y - y1;
+      unsigned int y2;
+      if (y1 + 1 < og_height) {
+        y2 = y1 + 1;
+      } else {
+        y2 = y1;
+      }
+
+      // Distanze frazionarie (la parte decimale delle coordinate). Infatti x1 è
+      // stato ottenuto da og_x troncando la parte decimale, la conversione
+      // avviene sistematicamente per difetto.
+      float dx = og_x - static_cast<float>(x1);
+      float dy = og_y - static_cast<float>(y1);
 
       // Estrae i colori dei 4 pixel vicini dall'immagine originale
       sf::Color c11 = originalImage.getPixel(x1, y1);
@@ -149,12 +106,14 @@ HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
 
       // funzione interna per fare la media pesata di un singolo canale di
       // colore (R, G o B)
-      // ho usato gemini, la parentesi quadrata rappresentano la clausola di
+      // ho usato gemini, la parentesi quadrata rappresenta la clausola di
       // cattura (capture clause).
 
       // Servono a indicare al compilatore quali variabili esterne (definite
       // fuori dalla lambda, nella funzione principale) la lambda ha il permesso
-      // di "importare" e usare al suo interno.
+      // di "importare" e usare al suo interno. In questo caso conosce la
+      // posizione esatta dei pixel all'interno del quadrato formato dai 4
+      // vicini
 
       auto interpolate_channel = [dx, dy](uint8_t v11, uint8_t v21, uint8_t v12,
                                           uint8_t v22) -> uint8_t {
@@ -176,7 +135,7 @@ HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
     }
   }
 
-  //Instanzia l'oggetto finale e binarizza l'immagine ridimensionata
+  // Instanzia l'oggetto finale e binarizza l'immagine ridimensionata
   HopfieldPattern result_pattern;
   result_pattern.binarize(resized_image);
 
@@ -195,24 +154,32 @@ bool HopfieldPattern::saveToFile(const std::filesystem::path& filepath) const
     return false;
   }
   // creazione dell'immagine SFML con le dimensioni del pattern
+  // NOTA questo metodo può essere usato solo con immagini che siano già state
+  // ridimensionate esattamente a width_ e height_!!!
   sf::Image image;
   image.create(
       width_,
-      height_); // sulla documentazione corrente non si trova
-                // create...versione datata di SFML
-                // https://www.sfml-dev.org/documentation/3.1.0/classsf_1_1Image.html
+      height_); // membro della classe, ha accesso ai suoi membri privati
+                //  sulla documentazione corrente non si trova
+                //  create...versione datata di SFML
+                //  https://www.sfml-dev.org/documentation/3.1.0/classsf_1_1Image.html
 
   // mappatura dei valori binari (+/-1) sui pixel dell'immagine
   for (unsigned int y = 0; y < height_; ++y) {
-    for (unsigned int x = 0; x < width_; ++x) {
-      std::size_t index = static_cast<std::size_t>(y) * width_ + x;
+    for (unsigned int x = 0; x < width_;
+         ++x) { // il doppio ciclo potrebbe diventare lento
+      std::size_t index =
+          static_cast<std::size_t>(y) * width_ + x; // calcolo indice 1D
 
       sf::Color color;
 
       if (data_[index] == 1) {
         color = sf::Color::White;
-      } else {
+      } else if (data_[index] == -1) {
         color = sf::Color::Black;
+      } else {
+        // gestione del valore non binarizzato (+1 / -1)
+        return false;
       }
 
       image.setPixel(x, y, color);

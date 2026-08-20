@@ -5,14 +5,14 @@ int main()
 {
   // 1. Caricamento dell'immagine mediante SFML
   sf::Image original_image;
-  if (!original_image.loadFromFile("img.png")) {
+  if (!original_image.loadFromFile("img1.png")) {
     std::cerr << "Errore: impossibile caricare l'immagine! \n";
     return 1;
   }
   // 2. Ridimensionamento e binarizzazione dell'immagine
 
-  unsigned int targetWidth=20;
-  unsigned int targetHeight=20;
+  unsigned int targetWidth=400;
+  unsigned int targetHeight=400;
 
   Hopfield::HopfieldPattern pattern;
   Hopfield::HopfieldPattern ready_pattern =
@@ -22,7 +22,7 @@ int main()
             <<ready_pattern.getSize() << "\n";
 
   // 3. Salvataggio dell'immagine ottenuta
-  if (ready_pattern.saveToFile("ready_img.png")) {
+  if (ready_pattern.saveToFile("ready_img1.png")) {
     std::cout << "Immagine ridimensionata e binarizzata salvata in "
                  "'ready_img.png'. \n ";
   }
