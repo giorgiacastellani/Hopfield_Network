@@ -21,7 +21,7 @@ void HopfieldNetwork::train(const std::vector<HopfieldPattern>& patterns)
 
   // ricaviamo la dimensione N_ direttamente dalla prima immagine, così non lo
   // imponiamo a priori ma è da capire come vogliamo strutturare il progetto
-  N_ = patterns[0].size();
+  N_ = patterns[0].getSize();
 
   // matrice dei pesi N x N riempita di zeri
   weights_ = std::vector<double>(N_ * N_, 0.0);
