@@ -34,7 +34,7 @@ void HopfieldNetwork::train(const std::vector<HopfieldPattern>& patterns)
     for (std::size_t j = 0; j < N_; ++j) {
       if (i == j) {
         // Diagonale nulla
-        weights_[i * N_ + j] = 0.0;
+        weights_[i * N_ + j] = 0.0; //formula matematica per calcolare l'indice del vettore 1 dim
       } else {
         double sum = 0.0;
 
@@ -49,64 +49,70 @@ void HopfieldNetwork::train(const std::vector<HopfieldPattern>& patterns)
     }
   }
 }
-//BOZZA DI GEMINI SULLA PARTE DOPO, MA IO NON CI SONO ANCORA ARRIVATA, INVECE LA PARTE SOPRA VA BENE
-// Scrive la dimensione N_ e poi tutti i pesi della matrice W su file.
-// ============================================================================
-void HopfieldNetwork::saveWeights(const std::string& filename) const {
-    std::ofstream file(filename);
-    
-    if (!file.is_open()) {
-        throw std::runtime_error("Errore: impossibile aprire il file per salvare la matrice pesi!");
-    }
+// BOZZA DI GEMINI SULLA PARTE DOPO, MA IO NON CI SONO ANCORA ARRIVATA, INVECE
+// LA PARTE SOPRA VA BENE
+//  Scrive la dimensione N_ e poi tutti i pesi della matrice W su file.
+//  ============================================================================
+void HopfieldNetwork::saveWeights(const std::string& filename) const
+{
+  std::ofstream file(filename);
 
-    // Scriviamo N_ nella prima riga
-    file << N_ << "\n";
+  if (!file.is_open()) {
+    throw std::runtime_error(
+        "Errore: impossibile aprire il file per salvare la matrice pesi!");
+  }
 
-    // Scriviamo i pesi riga per riga
-    for (std::size_t i = 0; i < N_; ++i) {
-        for (std::size_t j = 0; j < N_; ++j) {
-            file << weights_[i * N_ + j] << " ";
-        }
-        file << "\n";
+  // Scriviamo N_ nella prima riga
+  file << N_ << "\n";
+
+  // Scriviamo i pesi riga per riga
+  for (std::size_t i = 0; i < N_; ++i) {
+    for (std::size_t j = 0; j < N_; ++j) {
+      file << weights_[i * N_ + j] << " ";
     }
+    file << "\n";
+  }
 }
 
 // ============================================================================
 // METODO loadWeights
 // Legge N_ dal file, adatta la dimensione del vettore e carica i pesi W.
 // ============================================================================
-void HopfieldNetwork::loadWeights(const std::string& filename) {
-    std::ifstream file(filename);
-    
-    if (!file.is_open()) {
-        throw std::runtime_error("Errore: impossibile aprire il file della matrice pesi!");
-    }
+void HopfieldNetwork::loadWeights(const std::string& filename)
+{
+  std::ifstream file(filename);
 
-    std::size_t loaded_N = 0;
-    file >> loaded_N; // Legge il numero di neuroni salvato nel file
+  if (!file.is_open()) {
+    throw std::runtime_error(
+        "Errore: impossibile aprire il file della matrice pesi!");
+  }
 
-    if (loaded_N == 0) {
-        throw std::runtime_error("File corrotto o dimensione N non valida.");
-    }
+  std::size_t loaded_N = 0;
+  file >> loaded_N; // Legge il numero di neuroni salvato nel file
 
-    // Aggiorniamo N_ e ridimensioniamo il vettore dei pesi
-    N_ = loaded_N;
-    weights_ = std::vector<double>(N_ * N_, 0.0);
+  if (loaded_N == 0) {
+    throw std::runtime_error("File corrotto o dimensione N non valida.");
+  }
 
-    // Leggiamo in sequenza gli N x N pesi
-    for (std::size_t k = 0; k < N_ * N_; ++k) {
-        file >> weights_[k];
-    }
+  // Aggiorniamo N_ e ridimensioniamo il vettore dei pesi
+  N_       = loaded_N;
+  weights_ = std::vector<double>(N_ * N_, 0.0);
+
+  // Leggiamo in sequenza gli N x N pesi
+  for (std::size_t k = 0; k < N_ * N_; ++k) {
+    file >> weights_[k];
+  }
 }
 
 // ============================================================================
 // METODO getWeight
 // Restituisce il valore del peso W_ij posizionato alla riga i e colonna j.
 // ============================================================================
-double HopfieldNetwork::getWeight(std::size_t i, std::size_t j) const {
-    if (i >= N_ || j >= N_) {
-        throw std::out_of_range("Indici i o j fuori dai limiti della matrice!");
-    }
-    return weights_[i * N_ + j];
+double HopfieldNetwork::getWeight(std::size_t i, std::size_t j) const
+{
+  if (i >= N_ || j >= N_) {
+    throw std::out_of_range("Indici i o j fuori dai limiti della matrice!");
+  }
+  return weights_[i * N_ + j];
 }
 } // namespace Hopfield

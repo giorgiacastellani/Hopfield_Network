@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "acquisition.hpp"
 #include "doctest.h"
+#include "training.hpp"
 
 // https://github.com/doctest/doctest
 
@@ -259,61 +260,148 @@ TEST_CASE("HopfieldPattern - Bilinear Interpolation")
 // -------------------------------------------------------------
 // 4. TEST METODO SAVETOFILE
 // -------------------------------------------------------------
-TEST_CASE("Hopfieldpattern - Salvataggio immagini"){
-
-SUBCASE("Test Immagine Vuota"){
-HopfieldPattern pattern1(0, 5, {}); // data_ è vuoto
-HopfieldPattern pattern2(5, 0, {}); // data_ è vuoto
-HopfieldPattern pattern3; // width_ = 0, height_ = 0, data_ è vuoto (default)
-
-CHECK(pattern1.saveToFile("out1.png") == false);
-CHECK(pattern2.saveToFile("out2.png") == false);
-CHECK(pattern3.saveToFile("out3.png") == false);
-}
-
-SUBCASE("Test Dimensioni Immagine Salvata")
+TEST_CASE("Hopfieldpattern - Salvataggio immagini")
 {
-  // creo un oggetto HopfieldPattern con i parametri che voglio io;
-  HopfieldPattern pattern(2, 1, {1, 1});
+  SUBCASE("Test Immagine Vuota")
+  {
+    HopfieldPattern pattern1(0, 5, {}); // data_ è vuoto
+    HopfieldPattern pattern2(5, 0, {}); // data_ è vuoto
+    HopfieldPattern
+        pattern3; // width_ = 0, height_ = 0, data_ è vuoto (default)
 
-  // salvo l'oggetto su un percorso e controllo che il salvataggio sia
-  // avvenuto correttamente, non dovrebbe essere fermato da nessuno dei 3
-  // check
-  CHECK(pattern.saveToFile("out.png") == true);
+    CHECK(pattern1.saveToFile("out1.png") == false);
+    CHECK(pattern2.saveToFile("out2.png") == false);
+    CHECK(pattern3.saveToFile("out3.png") == false);
+  }
 
-  // credo un oggetto immagine e usando il metodo SFML lo carico
-  sf::Image savedImage;
-  REQUIRE(savedImage.loadFromFile("out.png"));
-  // check vero e proprio: l'oggetto salvato è stato salvato con le stesse
-  // dimensioni di pattern?
-  CHECK(savedImage.getSize().x == 2);
-  CHECK(savedImage.getSize().y == 1);
+  SUBCASE("Test Dimensioni Immagine Salvata")
+  {
+    // creo un oggetto HopfieldPattern con i parametri che voglio io;
+    HopfieldPattern pattern(2, 1, {1, 1});
 
-  std::filesystem::remove("out.png");
+    // salvo l'oggetto su un percorso e controllo che il salvataggio sia
+    // avvenuto correttamente, non dovrebbe essere fermato da nessuno dei 3
+    // check
+    CHECK(pattern.saveToFile("out.png") == true);
+
+    // credo un oggetto immagine e usando il metodo SFML lo carico
+    sf::Image savedImage;
+    REQUIRE(savedImage.loadFromFile("out.png"));
+    // check vero e proprio: l'oggetto salvato è stato salvato con le stesse
+    // dimensioni di pattern?
+    CHECK(savedImage.getSize().x == 2);
+    CHECK(savedImage.getSize().y == 1);
+
+    std::filesystem::remove("out.png");
+  }
+
+  SUBCASE("Gestione di data_ con un elemento diverso da +1 e -1")
+  {
+    HopfieldPattern pattern(2, 2, {1, 1, -1, 3});
+
+    CHECK(pattern.saveToFile("out.png") == false); // per via della presenza di
+                                                   // 3
+  }
+
+  SUBCASE("Test Correttezza Mappatura Colori Pixel")
+  {
+    // Pattern 2x1: primo valore 1 (Bianco), secondo valore -1 (Nero)
+    HopfieldPattern pattern(2, 1, {1, -1});
+
+    REQUIRE(pattern.saveToFile("test_colors.png"));
+
+    sf::Image savedImage;
+    REQUIRE(savedImage.loadFromFile("test_colors.png"));
+
+    // Verifica la corrispondenza dei colori sui singoli pixel
+    CHECK(savedImage.getPixel(0, 0) == sf::Color::White);
+    CHECK(savedImage.getPixel(1, 0) == sf::Color::Black);
+
+    std::filesystem::remove("test_colors.png");
+  }
 }
-
-SUBCASE("Gestione di data_ con un elemento diverso da +1 e -1")
+// TEST NETWORKTRAINER E REGOLE DI HEBB
+TEST_CASE(
+    "NetworkTrainer - Training and Weight Management") // verifica delle
+                                                       // cindzioni iniziali
 {
-  HopfieldPattern pattern(2, 2, {1, 1, -1, 3});
+  SUBCASE("Initial State and Getters")
+  {
+    NetworkTrainer trainer(9); // 9 neuroni
+    CHECK(trainer.getPatternSize() == 9);
+    CHECK(trainer.getPatternCount()
+          == 0); // assicura che l'oggetto appena creato non abbia ancora nessun
+                 // pattern di addestramento
+    CHECK(trainer.empty() == true);
+  }
+  SUBCASE("Validation of Added Patterns")
+  {
+    NetworkTrainer trainer(3);
 
-  CHECK(pattern.saveToFile("out.png") == false); // per via della presenza di
-                                                 // 3
-}
+    // Valid pattern (N=3, values must be +1 or -1)
+    HopfieldPattern p_valid(
+        3, 1, {1, -1, 1}); // Height, weight e il valore dei tre pixel
+    trainer.addPattern(p_valid);
+    CHECK(trainer.getPatternCount() == 1);
+    CHECK(trainer.empty() == false);
 
-SUBCASE("Test Correttezza Mappatura Colori Pixel")
-{
-  // Pattern 2x1: primo valore 1 (Bianco), secondo valore -1 (Nero)
-  HopfieldPattern pattern(2, 1, {1, -1});
+    // Wrong pattern size (N=4 )
+    HopfieldPattern p_wrong_size(4, 1, {1, -1, 1, -1});
+    trainer.addPattern(p_wrong_size);
+    CHECK(trainer.getPatternCount() == 1); // Count should not increase
 
-  REQUIRE(pattern.saveToFile("test_colors.png"));
+    // 3. Invalid pattern values
+    HopfieldPattern p_invalid_val(3, 1, {1, 0, -1});
+    trainer.addPattern(p_invalid_val);
+    CHECK(trainer.getPatternCount() == 1); // Count should not increase
+  }
+  SUBCASE("Exception on Training Empty Dataset")
+  {
+    NetworkTrainer trainer(4);
 
-  sf::Image savedImage;
-  REQUIRE(savedImage.loadFromFile("test_colors.png"));
+    // Chiamando train() with no patterns must throw std::invalid_argument
+    REQUIRE_THROWS_AS(
+        trainer.train(),
+        std::invalid_argument); // usiamo questo e non check, quando se continua
+                                // potrebbe essere rischioso
+  }
+  SUBCASE("Weight Matrix Calculation (Hebb's Rule)")
+  {
+    // Create a trainer for pattern size N = 3
+    NetworkTrainer trainer(3);
 
-  // Verifica la corrispondenza dei colori sui singoli pixel
-  CHECK(savedImage.getPixel(0, 0) == sf::Color::White);
-  CHECK(savedImage.getPixel(1, 0) == sf::Color::Black);
+    // i due pattern
+    HopfieldPattern p1(3, 1, {1, -1, 1});
+    HopfieldPattern p2(3, 1, {1, 1, -1});
 
-  std::filesystem::remove("test_colors.png");
-}
+    trainer.addPattern(p1);
+    trainer.addPattern(p2);
+
+    auto W = trainer.train();
+
+    // verifichiamo le dimensioni della matrice
+    CHECK(W.size() == 3);
+    CHECK(W[0].size() == 3); // verifichiamo la prim,a riga contenga 3 elementi
+
+    // verifichiamo la diagonale contenga zeri
+    CHECK(W[0][0] == 0.0);
+    CHECK(W[1][1] == 0.0);
+    CHECK(W[2][2] == 0.0);
+
+    // verifichiamo la matrice sia simmetrica
+    CHECK(W[0][1] == W[1][0]);
+    CHECK(W[0][2] == W[2][0]);
+    CHECK(W[1][2] == W[2][1]);
+
+    // controlliamo i valori numerici calcolati a mano :
+    // W[0][1] = ( (1)*(-1) + (1)*(1) ) / 3 = 0 / 3 = 0.0
+    CHECK(W[0][1] == 0.0);
+
+    // W[1][2] = ( (-1)*(1) + (1)*(-1) ) / 3 = -2 / 3 = -0.6666...
+    CHECK(W[1][2]
+          == doctest::Approx(-0.666666).epsilon(
+              0.001)); // chiesto a gemini la sintassi, verifica che il avlore
+                       // sia quello con una tolleranza di epsilon
+  }
+  // MI MANCANO ANCORA DUE TEST, LI FINISCO DOPO
 }
