@@ -37,7 +37,7 @@ find_package(SFML 2.6 COMPONENTS graphics REQUIRED)
 
 # dichiara un eseguibile chiamato "progetto", prodotto a partire dai file sorgente indicati
 # sostituire "progetto" con il nome del proprio eseguibile e i file sorgente con i propri (con nomi sensati!)
-add_executable(progetto main.cpp acquisition.cpp)
+add_executable(progetto main.cpp acquisition.cpp training.cpp recall.cpp)
 # nel caso si usi SFML. analogamente per eventuali altre librerie
 target_link_libraries(progetto PRIVATE sfml-graphics)
 
@@ -48,7 +48,7 @@ target_link_libraries(progetto PRIVATE sfml-graphics)
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile progetto.t
-  add_executable(progetto.t acquisition.cpp test.cpp)
+  add_executable(progetto.t acquisition.cpp training.cpp recall.cpp test.cpp)
 
 # MODIFICA!!!!!!!!!
   target_link_libraries(progetto.t PRIVATE sfml-graphics)

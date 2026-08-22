@@ -68,8 +68,11 @@ HopfieldPattern HopfieldPattern::interpolate(const sf::Image& originalImage,
     for (unsigned int x = 0; x < targetWidth; ++x) {
       // MAPPA LA COORDINATA: calcola dove cade il pixel (x, y) nell'immagine
       // originale
-      float og_x = x * scale_x;
-      float og_y = y * scale_y;
+      float og_x = static_cast<float>(x)
+                 * scale_x; // se non uso gli static_cast per x e y durante la
+                            // compilazione, i warning mi dicono che potrebbero
+                            // cambiare valore nella conversione
+      float og_y = static_cast<float>(y) * scale_y;
 
       // Trova le coordinate intere dei pixel vicini nell'immagine originale.
       unsigned int x1 = static_cast<unsigned int>(og_x);
@@ -189,4 +192,8 @@ bool HopfieldPattern::saveToFile(const std::filesystem::path& filepath) const
   // salvataggio dell'immagine su percorso specifico
   return image.saveToFile(filepath.string());
 }
+
+HopfieldPattern corruption_noise(sf::Image&) {}
+
+HopfieldPattern corruption_systematic(sf::Image&){}
 } // namespace Hopfield

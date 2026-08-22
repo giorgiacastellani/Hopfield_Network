@@ -1,30 +1,27 @@
 #include "training.hpp"
-
-#include <fstream>
-#include <stdexcept> // Necessario per scrivere su file
+#include <fstream> //lo usiamo in saveWeightsToFile
+#include <iomanip>
+#include <iostream>
+#include <stdexcept> // serve per la gestione delle due clausole di addPattern
 namespace Hopfield {
-NetworkTrainer::NetworkTrainer(std::size_t pattern_size)
-    : pattern_size_(pattern_size)
-{}
 
-// METODI DELLA CLASSE E UTILITY
-// a partire da https://cppreference.com/cpp/container/vector
-// prendo i metodi che penso mi possano servire e li adatto alla classe
-// il metodo principale sarà quello di addestramento tramite matrice
+// METODI NECESSARI ALLA GESTIONE DI BASE DELLA CLASSE E PROPEDEUTICI A
+// train E saveWeightsToFile:
 
-// modificatore
+//  modificatore
 void NetworkTrainer::addPattern(const HopfieldPattern& pattern)
 {
   // 1. Controllo dimensione N
   if (pattern.getSize() != pattern_size_) {
-    return;
+    throw std::invalid_argument("Dimensione del pattern non valida!");
   }
 
   // 2. Controllo presenza esclusiva di +1 e -1
   // ciclo for per scorrere tra i pixel di un pattern
   for (std::size_t i = 0; i < pattern.getSize(); ++i) {
     if (pattern[i] != 1 && pattern[i] != -1) {
-      return;
+      throw std::invalid_argument(
+          "Il pattern contiene valori diversi da +1 e -1!");
     }
   }
 
@@ -46,6 +43,7 @@ bool NetworkTrainer::empty() const
 {
   return patterns_.empty();
 }
+
 // equivarrebbe a ricominciare da capo "l'addestramento"
 void NetworkTrainer::clear()
 {
@@ -54,11 +52,12 @@ void NetworkTrainer::clear()
 // accesso agli elementi
 const HopfieldPattern& NetworkTrainer::operator[](std::size_t index) const
 {
-  return patterns_[index];
+  return patterns_[index]; // dati P pattern nel mio vettore di pattern, a quale
+                           // faccio riferimento? index appartiene a [0;P-1]
 }
 
-// METODO PRINCIPALE
-// Calcola la matrice dei pesi W come matrice 2D (vettore di vettori N x N)
+// METODI IMPORTANTI E CARATTERISTICI DELLA CLASSE
+
 std::vector<std::vector<double>> NetworkTrainer::train()
     const // è vuota in argomento perché tutto ciò che serve è già
           // contenuto nella classe NetworkTrainer su cui chiamiamo train
@@ -98,6 +97,40 @@ std::vector<std::vector<double>> NetworkTrainer::train()
 
   return weights;
 }
+
+// gemini lo consiglia per verificare facilmente che la matrice sia simmetrica e
+// per controllarla prima di stamparla su file (lo inseriamo nel main)
+void NetworkTrainer::printWeights(
+    const std::vector<std::vector<double>>& weights) const
+{
+  if (weights.empty()) {
+    std::cout << "La matrice dei pesi e' vuota!\n";
+    return;
+  }
+
+  std::size_t N =
+      weights.size(); // usando pattern_size_ anziché N nel ciclo non impedisco
+                      // che si passi al metodo una qualsiasi matrice...che non
+                      // sia affatto il risultato di train e quindi N x N
+
+  std::cout << "\n Matrice dei Pesi W di dimensione" << N << "x" << N << "\n";
+
+  for (std::size_t i = 0; i < N; ++i) {
+    if (weights[i].size() != N) {
+      std::cout << "La matrice fornita non è quadrata! \n";
+      return;
+    }
+    for (std::size_t j = 0; j < N; ++j) {
+      // std::fixed e std::setprecision(2) bloccano i decimali a 2 cifre
+      // std::setw(7) allinea i numeri in colonne larghe 7 caratteri
+      std::cout << std::fixed << std::setprecision(2)
+                << std::setw(7) // gemini puro
+                << weights[i][j] << " ";
+    }
+    std::cout << "\n"; // Vada a capo alla fine di ogni riga
+  }
+}
+
 bool NetworkTrainer::saveWeightsToFile(
     const std::filesystem::path& filepath,
     const std::vector<std::vector<double>>& weights) const
@@ -110,7 +143,8 @@ bool NetworkTrainer::saveWeightsToFile(
     return false;
   }
 
-  std::size_t N = weights.size();
+  std::size_t N = weights.size(); // weights è un vettore di vettori e
+                                  // quindi posso usare il metodo di <vector>
 
   // Scrive N nella prima riga (dimensione della matrice N x N)
   file << N << "\n";
@@ -126,10 +160,4 @@ bool NetworkTrainer::saveWeightsToFile(
   return true;
 }
 
-// ora devo: separare dichiarazioni da definizioni e metterle nell'.hpp già
-// creato, scrivere tutti i test per questi metodi e poi creare un metodo che
-// salvi la matrice dei pesi ed eventualmente uno che la stampi a schermo
-// (secondo Gemini ma bo)
-}; // namespace Hopfield
-
-; // namespace Hopfield
+} // namespace Hopfield

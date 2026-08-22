@@ -13,6 +13,18 @@
 },
 {
   "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/progetto.dir/Debug/training.cpp.o -c /home/ubuntu/Hopfield_Network/training.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/training.cpp",
+  "output": "CMakeFiles/progetto.dir/Debug/training.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/progetto.dir/Debug/recall.cpp.o -c /home/ubuntu/Hopfield_Network/recall.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/recall.cpp",
+  "output": "CMakeFiles/progetto.dir/Debug/recall.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
   "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.dir/Release/main.cpp.o -c /home/ubuntu/Hopfield_Network/main.cpp",
   "file": "/home/ubuntu/Hopfield_Network/main.cpp",
   "output": "CMakeFiles/progetto.dir/Release/main.cpp.o"
@@ -22,6 +34,18 @@
   "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.dir/Release/acquisition.cpp.o -c /home/ubuntu/Hopfield_Network/acquisition.cpp",
   "file": "/home/ubuntu/Hopfield_Network/acquisition.cpp",
   "output": "CMakeFiles/progetto.dir/Release/acquisition.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.dir/Release/training.cpp.o -c /home/ubuntu/Hopfield_Network/training.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/training.cpp",
+  "output": "CMakeFiles/progetto.dir/Release/training.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.dir/Release/recall.cpp.o -c /home/ubuntu/Hopfield_Network/recall.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/recall.cpp",
+  "output": "CMakeFiles/progetto.dir/Release/recall.cpp.o"
 },
 {
   "directory": "/home/ubuntu/Hopfield_Network/build",
@@ -37,9 +61,33 @@
 },
 {
   "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/progetto.dir/RelWithDebInfo/training.cpp.o -c /home/ubuntu/Hopfield_Network/training.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/training.cpp",
+  "output": "CMakeFiles/progetto.dir/RelWithDebInfo/training.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/progetto.dir/RelWithDebInfo/recall.cpp.o -c /home/ubuntu/Hopfield_Network/recall.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/recall.cpp",
+  "output": "CMakeFiles/progetto.dir/RelWithDebInfo/recall.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
   "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o -c /home/ubuntu/Hopfield_Network/acquisition.cpp",
   "file": "/home/ubuntu/Hopfield_Network/acquisition.cpp",
   "output": "CMakeFiles/progetto.t.dir/Debug/acquisition.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/progetto.t.dir/Debug/training.cpp.o -c /home/ubuntu/Hopfield_Network/training.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/training.cpp",
+  "output": "CMakeFiles/progetto.t.dir/Debug/training.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Debug\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -g -fsanitize=address,undefined -std=c++20 -o CMakeFiles/progetto.t.dir/Debug/recall.cpp.o -c /home/ubuntu/Hopfield_Network/recall.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/recall.cpp",
+  "output": "CMakeFiles/progetto.t.dir/Debug/recall.cpp.o"
 },
 {
   "directory": "/home/ubuntu/Hopfield_Network/build",
@@ -55,6 +103,18 @@
 },
 {
   "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.t.dir/Release/training.cpp.o -c /home/ubuntu/Hopfield_Network/training.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/training.cpp",
+  "output": "CMakeFiles/progetto.t.dir/Release/training.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.t.dir/Release/recall.cpp.o -c /home/ubuntu/Hopfield_Network/recall.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/recall.cpp",
+  "output": "CMakeFiles/progetto.t.dir/Release/recall.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
   "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"Release\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20 -o CMakeFiles/progetto.t.dir/Release/test.cpp.o -c /home/ubuntu/Hopfield_Network/test.cpp",
   "file": "/home/ubuntu/Hopfield_Network/test.cpp",
   "output": "CMakeFiles/progetto.t.dir/Release/test.cpp.o"
@@ -64,6 +124,18 @@
   "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/progetto.t.dir/RelWithDebInfo/acquisition.cpp.o -c /home/ubuntu/Hopfield_Network/acquisition.cpp",
   "file": "/home/ubuntu/Hopfield_Network/acquisition.cpp",
   "output": "CMakeFiles/progetto.t.dir/RelWithDebInfo/acquisition.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/progetto.t.dir/RelWithDebInfo/training.cpp.o -c /home/ubuntu/Hopfield_Network/training.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/training.cpp",
+  "output": "CMakeFiles/progetto.t.dir/RelWithDebInfo/training.cpp.o"
+},
+{
+  "directory": "/home/ubuntu/Hopfield_Network/build",
+  "command": "/usr/bin/c++ -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\"  -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O2 -g -DNDEBUG -std=c++20 -o CMakeFiles/progetto.t.dir/RelWithDebInfo/recall.cpp.o -c /home/ubuntu/Hopfield_Network/recall.cpp",
+  "file": "/home/ubuntu/Hopfield_Network/recall.cpp",
+  "output": "CMakeFiles/progetto.t.dir/RelWithDebInfo/recall.cpp.o"
 },
 {
   "directory": "/home/ubuntu/Hopfield_Network/build",

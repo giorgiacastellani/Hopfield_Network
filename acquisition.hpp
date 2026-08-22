@@ -1,12 +1,6 @@
 #ifndef ACQUISITION_HPP
 #define ACQUISITION_HPP
 #include <SFML/Graphics.hpp>
-// #  include <algorithm>
-// #  include <cmath>
-// #  include <cstdint> // Necessario per std::uint8_t
-// #  include <iostream>
-// #  include <stdexcept>
-// #  include <string>
 #include <filesystem>
 #include <string>
 #include <vector>
@@ -29,13 +23,14 @@ class HopfieldPattern
       , data_(width * height, -1)
   {}
   // COSTRUTTORE A 3 ARGOMENTI PER I TEST E INIT RAPIDA
-  HopfieldPattern(unsigned int width, unsigned int height, const std::vector<int>& data)
+  HopfieldPattern(unsigned int width, unsigned int height,
+                  const std::vector<int>& data)
       : width_(width)
       , height_(height)
       , data_(data)
   {}
   // -- METODI DELLA CLASSE --
-  
+
   HopfieldPattern interpolate(const sf::Image& originalImage,
                               unsigned int targetWidth,
                               unsigned int targetHeight) const;
@@ -71,7 +66,13 @@ class HopfieldPattern
   {
     return data_[index];
   }
-  
+
+  // -- METODI DI CORRUZIONE (RECALL) --
+  // corruzione tramite rumore casuale
+HopfieldPattern corruption_noise(sf::Image&);
+
+  // corruzione tramite taglio sistematico
+HopfieldPattern corruption_systematic(sf::Image&);
 };
 
 } // namespace Hopfield

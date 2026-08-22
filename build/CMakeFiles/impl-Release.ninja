@@ -225,6 +225,20 @@ build CMakeFiles/progetto.dir/Release/acquisition.cpp.o: CXX_COMPILER__progetto_
   OBJECT_DIR = CMakeFiles/progetto.dir/Release
   OBJECT_FILE_DIR = CMakeFiles/progetto.dir/Release
 
+build CMakeFiles/progetto.dir/Release/training.cpp.o: CXX_COMPILER__progetto_unscanned_Release /home/ubuntu/Hopfield_Network/training.cpp || cmake_object_order_depends_target_progetto_RELEASE
+  DEFINES = -DCMAKE_INTDIR=\"Release\"
+  DEP_FILE = CMakeFiles/progetto.dir/Release/training.cpp.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
+  OBJECT_DIR = CMakeFiles/progetto.dir/Release
+  OBJECT_FILE_DIR = CMakeFiles/progetto.dir/Release
+
+build CMakeFiles/progetto.dir/Release/recall.cpp.o: CXX_COMPILER__progetto_unscanned_Release /home/ubuntu/Hopfield_Network/recall.cpp || cmake_object_order_depends_target_progetto_RELEASE
+  DEFINES = -DCMAKE_INTDIR=\"Release\"
+  DEP_FILE = CMakeFiles/progetto.dir/Release/recall.cpp.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
+  OBJECT_DIR = CMakeFiles/progetto.dir/Release
+  OBJECT_FILE_DIR = CMakeFiles/progetto.dir/Release
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target progetto
@@ -233,7 +247,7 @@ build CMakeFiles/progetto.dir/Release/acquisition.cpp.o: CXX_COMPILER__progetto_
 #############################################
 # Link the executable Release/progetto
 
-build Release/progetto: CXX_EXECUTABLE_LINKER__progetto_Release CMakeFiles/progetto.dir/Release/main.cpp.o CMakeFiles/progetto.dir/Release/acquisition.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
+build Release/progetto: CXX_EXECUTABLE_LINKER__progetto_Release CMakeFiles/progetto.dir/Release/main.cpp.o CMakeFiles/progetto.dir/Release/acquisition.cpp.o CMakeFiles/progetto.dir/Release/training.cpp.o CMakeFiles/progetto.dir/Release/recall.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/progetto.dir/Release
@@ -258,6 +272,20 @@ build CMakeFiles/progetto.t.dir/Release/acquisition.cpp.o: CXX_COMPILER__progett
   OBJECT_DIR = CMakeFiles/progetto.t.dir/Release
   OBJECT_FILE_DIR = CMakeFiles/progetto.t.dir/Release
 
+build CMakeFiles/progetto.t.dir/Release/training.cpp.o: CXX_COMPILER__progetto.2et_unscanned_Release /home/ubuntu/Hopfield_Network/training.cpp || cmake_object_order_depends_target_progetto.t_RELEASE
+  DEFINES = -DCMAKE_INTDIR=\"Release\"
+  DEP_FILE = CMakeFiles/progetto.t.dir/Release/training.cpp.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
+  OBJECT_DIR = CMakeFiles/progetto.t.dir/Release
+  OBJECT_FILE_DIR = CMakeFiles/progetto.t.dir/Release
+
+build CMakeFiles/progetto.t.dir/Release/recall.cpp.o: CXX_COMPILER__progetto.2et_unscanned_Release /home/ubuntu/Hopfield_Network/recall.cpp || cmake_object_order_depends_target_progetto.t_RELEASE
+  DEFINES = -DCMAKE_INTDIR=\"Release\"
+  DEP_FILE = CMakeFiles/progetto.t.dir/Release/recall.cpp.o.d
+  FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG -std=c++20
+  OBJECT_DIR = CMakeFiles/progetto.t.dir/Release
+  OBJECT_FILE_DIR = CMakeFiles/progetto.t.dir/Release
+
 build CMakeFiles/progetto.t.dir/Release/test.cpp.o: CXX_COMPILER__progetto.2et_unscanned_Release /home/ubuntu/Hopfield_Network/test.cpp || cmake_object_order_depends_target_progetto.t_RELEASE
   DEFINES = -DCMAKE_INTDIR=\"Release\"
   DEP_FILE = CMakeFiles/progetto.t.dir/Release/test.cpp.o.d
@@ -273,7 +301,7 @@ build CMakeFiles/progetto.t.dir/Release/test.cpp.o: CXX_COMPILER__progetto.2et_u
 #############################################
 # Link the executable Release/progetto.t
 
-build Release/progetto.t: CXX_EXECUTABLE_LINKER__progetto.2et_Release CMakeFiles/progetto.t.dir/Release/acquisition.cpp.o CMakeFiles/progetto.t.dir/Release/test.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
+build Release/progetto.t: CXX_EXECUTABLE_LINKER__progetto.2et_Release CMakeFiles/progetto.t.dir/Release/acquisition.cpp.o CMakeFiles/progetto.t.dir/Release/training.cpp.o CMakeFiles/progetto.t.dir/Release/recall.cpp.o CMakeFiles/progetto.t.dir/Release/test.cpp.o | /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   FLAGS = -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wimplicit-fallthrough -Wextra-semi -Wold-style-cast -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -O3 -DNDEBUG
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
   OBJECT_DIR = CMakeFiles/progetto.t.dir/Release

@@ -2,9 +2,9 @@
 #define TRAINING_HPP
 
 #include "acquisition.hpp"
+#include <cstddef> //prevede il tipo size_t
+#include <filesystem>
 #include <vector>
-#include <cstddef>
-#include <filesystem> //capire se metterli tutti o se gia presenti acquisition,toglierli
 namespace Hopfield {
 
 class NetworkTrainer
@@ -18,8 +18,10 @@ class NetworkTrainer
                  // vettori, es.binarize
 
  public:
-  // Costruttore...patterns_ verrà inzializzato come un vettore di dimensione 0
-  explicit NetworkTrainer(std::size_t pattern_size)
+  // Costruttore (lo lascio solo nel hpp perché se no lo vede come doppia
+  // definizione e dà errore di compilazione)...patterns_ verrà inzializzato
+  // come un vettore di dimensione 0
+  NetworkTrainer(std::size_t pattern_size)
       : pattern_size_(pattern_size)
   {}
 
@@ -30,37 +32,29 @@ class NetworkTrainer
 
   // modificatore
   void addPattern(const HopfieldPattern& pattern);
-  
 
-    
   std::size_t getPatternCount() const;
-  
 
   std::size_t getPatternSize() const;
-  
+
   bool empty() const;
   void clear();
-  
 
   // accesso agli elementi
   const HopfieldPattern& operator[](std::size_t index) const;
-  
-
-  
-  
 
   // METODO PRINCIPALE
   // Calcola la matrice dei pesi W come matrice 2D (vettore di vettori N x N)
   std::vector<std::vector<double>>
   train() const; // è vuota in argomento perché tutto ciò che serve è già
-                // contenuto nella classe NetworkTrainer su cui chiamiamo train
-  
-  
+                 // contenuto nella classe NetworkTrainer su cui chiamiamo train
+
+  void printWeights(const std::vector<std::vector<double>>& weights) const;
+
   bool saveWeightsToFile(const std::filesystem::path& filepath,
                          const std::vector<std::vector<double>>& weights) const;
- 
 };
 
-}; // namespace Hopfield
+} // namespace Hopfield
 
 #endif // TRAINING_HPP

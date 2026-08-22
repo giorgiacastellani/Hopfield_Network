@@ -5,10 +5,12 @@
 
 // https://github.com/doctest/doctest
 
-using namespace Hopfield; // a giacomini va bene??
+// DOBBIAMO UNIFORMARE LA LINGUA
+
+using namespace Hopfield;
 
 // -------------------------------------------------------------
-// 1. TEST STATO INIZIALE, COSTRUTTORI E GETTER / UTILI
+// 1. TEST HOPFIELD PATTERN - COSTRUTTORI E METODI SEMPLICI
 // -------------------------------------------------------------
 TEST_CASE("HopfieldPattern - Costruttori e Getter/Utili")
 {
@@ -264,8 +266,8 @@ TEST_CASE("Hopfieldpattern - Salvataggio immagini")
 {
   SUBCASE("Test Immagine Vuota")
   {
-    HopfieldPattern pattern1(0, 5, {}); // data_ è vuoto
-    HopfieldPattern pattern2(5, 0, {}); // data_ è vuoto
+    HopfieldPattern pattern1(0, 5, {}); // data_ è vuoto necessariamente
+    HopfieldPattern pattern2(5, 0, {}); // data_ è vuoto necessariamente
     HopfieldPattern
         pattern3; // width_ = 0, height_ = 0, data_ è vuoto (default)
 
@@ -320,10 +322,18 @@ TEST_CASE("Hopfieldpattern - Salvataggio immagini")
     std::filesystem::remove("test_colors.png");
   }
 }
-// TEST NETWORKTRAINER E REGOLE DI HEBB
+
+//------------------------------------------
+// 5. TEST NETWORKTRAINER E REGOLE DI HEBB
+//------------------------------------------
+
+// IO SOPRA HO FATTO UN TEST CASE PER OGNI METODO
+// QUANDO CI RIGUARDIAMO DOBBIAMO UNIFORMARCI
+// IO DEVO RIGUARDARE ANCHE I NOMI CHE HO SCELTO
+
 TEST_CASE(
     "NetworkTrainer - Training and Weight Management") // verifica delle
-                                                       // cindzioni iniziali
+                                                       // condzioni iniziali
 {
   SUBCASE("Initial State and Getters")
   {
@@ -404,4 +414,40 @@ TEST_CASE(
                        // sia quello con una tolleranza di epsilon
   }
   // MI MANCANO ANCORA DUE TEST, LI FINISCO DOPO
+}
+
+TEST_CASE("Metodo printWeights")
+{
+  SUBCASE("Test Matrice Vuota")
+  {
+    Hopfield::NetworkTrainer trainer(4);
+
+    std::vector<std::vector<double>> empty_matrix; // default constructor
+
+    trainer.printWeights(empty_matrix);
+
+    CHECK(empty_matrix.empty() == true);
+  }
+
+  SUBCASE("Test Matrice Malformata")
+  {
+    //Creo una matrice 1 x 3 anziché quella 4 x 4 che il metodo richiederebbe
+    Hopfield::NetworkTrainer trainer(4);
+    std::vector<std::vector<double>> malformed_matrix = {{1.0, 2.0, 3.0}};
+
+    trainer.printWeights(malformed_matrix);
+    CHECK(malformed_matrix.size() != trainer.getPatternSize());
+  }
+
+  SUBCASE("Test Matrice Valida")
+  {
+    Hopfield::NetworkTrainer trainer(4);
+    Hopfield::HopfieldPattern p1(2, 2, {1, -1, 1, -1});
+    trainer.addPattern(p1);
+
+    std::vector<std::vector<double>> W = trainer.train();
+    trainer.printWeights(W);
+
+    CHECK(W.size() == 4);
+  }
 }

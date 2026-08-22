@@ -1,24 +1,50 @@
-Start testing: Aug 20 15:47 CEST
+Start testing: Aug 21 21:15 CEST
 ----------------------------------------------------------
 1/1 Testing: progetto.t
 1/1 Test: progetto.t
 Command: "/home/ubuntu/Hopfield_Network/build/Debug/progetto.t"
 Directory: /home/ubuntu/Hopfield_Network/build
-"progetto.t" start time: Aug 20 15:47 CEST
+"progetto.t" start time: Aug 21 21:15 CEST
 Output:
 ----------------------------------------------------------
 [doctest] doctest version is "2.4.11"
 [doctest] run with "--help" for options
 ===============================================================================
-[doctest] test cases:   4 |   4 passed | 0 failed | 0 skipped
-[doctest] assertions: 446 | 446 passed | 0 failed |
-[doctest] Status: SUCCESS!
+/home/ubuntu/Hopfield_Network/test.cpp:334:
+TEST CASE:  NetworkTrainer - Training and Weight Management
+  Validation of Added Patterns
+
+/home/ubuntu/Hopfield_Network/test.cpp:334: ERROR: test case THREW exception: exception thrown in subcase - will translate later when the whole test case has been exited (cannot translate while there is an active exception)
+
+===============================================================================
+/home/ubuntu/Hopfield_Network/test.cpp:334:
+TEST CASE:  NetworkTrainer - Training and Weight Management
+
+DEEPEST SUBCASE STACK REACHED (DIFFERENT FROM THE CURRENT ONE):
+  Validation of Added Patterns
+
+/home/ubuntu/Hopfield_Network/test.cpp:334: ERROR: test case THREW exception: Dimensione del pattern non valida!
+
+La matrice dei pesi e' vuota!
+
+ Matrice dei Pesi W di dimensione1x1
+La matrice fornita non è quadrata! 
+
+ Matrice dei Pesi W di dimensione4x4
+   0.00   -0.25    0.25   -0.25 
+  -0.25    0.00   -0.25    0.25 
+   0.25   -0.25    0.00   -0.25 
+  -0.25    0.25   -0.25    0.00 
+===============================================================================
+[doctest] test cases:   6 |   5 passed | 1 failed | 0 skipped
+[doctest] assertions: 459 | 459 passed | 0 failed |
+[doctest] Status: FAILURE!
 <end of output>
-Test time =   0.12 sec
+Test time =   0.11 sec
 ----------------------------------------------------------
-Test Passed.
-"progetto.t" end time: Aug 20 15:47 CEST
+Test Failed.
+"progetto.t" end time: Aug 21 21:15 CEST
 "progetto.t" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Aug 20 15:47 CEST
+End testing: Aug 21 21:15 CEST
